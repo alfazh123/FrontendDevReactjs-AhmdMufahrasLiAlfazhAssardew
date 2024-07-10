@@ -27,7 +27,7 @@ function removeDuplicates(arr) {
 const getCategories = async () => {
     const data = await fetch("https://api-one-pied.vercel.app/api/v1/restaurants")
     const result = await data.json()
-    const categories = result.places.map((place) => place.category)
+    const categories = result.places.map((place, id) => id<=8 && place.category)
     return removeDuplicates(categories)
 
 

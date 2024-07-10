@@ -37,7 +37,8 @@ function App() {
         <ul className='grid md:grid-cols-2 lg:grid-cols-3 gap-4 justify-center mx-auto mt-10'>
           {places.map((place, id) => {
             const rating = place.ratingText ? place.ratingText.split(' ')[0] : 'No Rating';
-
+            {/* memberikan batasan postingan */}
+            if (id > 8) return null
             return (
               <li key={id}>
                 <CardRestaurant>
