@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import {fetchData} from '../service/load.data'
+import Navbar from './components/navbar'
 import {Link} from 'react-router-dom'
+
+import CardRestaurant from './components/CardRestaurant'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -23,40 +24,38 @@ function App() {
   return (
     <>
       <div className='flex flex-col mx-auto min-h-screen justify-center w-5/6 my-20'>
-        <h1 className='text-3xl'>Restaurant List</h1>
-        <ul className='flex flex-wrap gap-8'>
-        {places.map((place, id) => {
-          const rating = place.ratingText ? place.ratingText.split(' ')[0] : 'No Rating';
+        <>
+          <h1 className='text-3xl'>Restaurant</h1>
+          <p>Fugiat ex dolor sunt consequat dolor cupidatat. Irure culpa elit ad Lorem Lorem eu anim dolor labore non dolor ullamco ex aute. Sit excepteur veniam aliquip sunt. Magna cillum occaecat officia occaecat nostrud nulla irure adipisicing. Dolor dolor officia excepteur consectetur qui consequat tempor.</p>
+          <hr />
+        </>
 
-          return (
-            <li key={id} className='w-96 h-full rounded-md flex flex-col justify-center bg-gray-200'>
-              <div className='w-full h-60 p-4'>
-                <img src={place.image} alt={place.storeName} className='w-full h-full object-cover' />
-              </div>
-              <div className='p-4 space-y-10'>
-                <div>
-                  <div className='rounded-md flex flex-col'>
-                    <h2 className='text-xl'>{place.storeName}</h2>
-                    <p>Rating: {rating}&#9733;</p>
-                  </div>
-                  <div className='flex justify-between'>
-                    <div className='flex w-1/2'>
-                      <p>{place.address ? place.address : "Surabaya"}{" - "}{place.price ? place.price : '$$'}</p>
-                    </div>
-                    <div className='flex justify-center items-center gap-2'>
-                      <div className={`${place.isOpen === "Buka" ? 'bg-green-500' : 'bg-red-500'} w-2 h-2 rounded-full`}></div>
-                      <p className='text-sm'>{place.isOpen}</p>
-                    </div>
-                  </div>
-                </div>
+        <Navbar />
 
-              </div>
-                <div>
-                  {/* <Link to="/path">Learn More</Link> */}
-                </div>
-            </li>
-          )
-        })}
+        <hr />
+
+        <ul className='grid md:grid-cols-2 lg:grid-cols-3 gap-4 justify-center mx-auto mt-10'>
+          {places.map((place, id) => {
+            const rating = place.ratingText ? place.ratingText.split(' ')[0] : 'No Rating';
+
+            return (
+              <li key={id}>
+                <CardRestaurant>
+                  <CardRestaurant.Header image={place.image} alt={place.storeName} />
+                  <div className='space-y-8 m-4'>
+                    <CardRestaurant.Body
+                      storeName={place.storeName}
+                      rating={rating}
+                      address={place.address}
+                      price={place.price}
+                      isOpen={place.isOpen}
+                    />
+                    <CardRestaurant.Footer placeId={place.placeId}/>
+                  </div>
+                </CardRestaurant>
+              </li>
+            )
+          })}
         </ul>
       </div>
     </>
