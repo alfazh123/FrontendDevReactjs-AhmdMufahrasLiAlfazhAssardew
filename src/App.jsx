@@ -18,14 +18,14 @@ function App() {
     // console.log(places)
   }, [])
 
-    let filteredPlaces = places.filter((place) => {
-      let leng = place.price?.length
-      return (
-        leng === ((filter.price === 'all' ? '' : Number(filter.price))) || (filter.price === 'all' ? place.price?.includes('') : place.price?.includes(filter.price)) &&
-        place.category?.includes((filter.categories === 'all' ? 'all' : filter.categories)) &&
-        (place.isOpen?.includes(filter.isOpen ? 'Buka' : ''))
-      )
-    })
+  let filteredPlaces = places.filter((place) => {
+    let leng = place.price?.length
+    return (
+      (leng === (Number(filter.price)) || (place.price?.includes(filter.price))) &&
+      (place.category?.includes(filter.categories)) &&
+      (place.isOpen?.includes(filter.isOpen))
+    )
+  })
 
 
   return (
@@ -64,7 +64,7 @@ function App() {
             )
           })} */}
 
-          {filteredPlaces.map((place, id) => {
+          {filteredPlaces && filteredPlaces.map((place, id) => {
             const rating = place.ratingText ? place.ratingText.split(' ')[0] : 'No Rating';
             if (id > 8) return null
             return (
