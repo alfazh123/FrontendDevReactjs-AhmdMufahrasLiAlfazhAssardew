@@ -1,25 +1,32 @@
 import { useState, useEffect } from 'react'
 import {fetchData} from '../service/load.data'
 import Navbar from './components/navbar'
-import {Link} from 'react-router-dom'
+import { useSelector } from 'react-redux'
 
 import CardRestaurant from './components/CardRestaurant'
 
 function App() {
   const [count, setCount] = useState(0)
   const [places, setPlaces] = useState([])
+  const filter = useSelector((state) => state.filter.filter)
 
   useEffect(() => {
     fetchData((data) => {
       setPlaces(data)
-      console.log(data)
+      // console.log(data)
     })
-    console.log(places)
+    // console.log(places)
   }, [])
 
-  places.filter((p, id)=> {
+    let filteredPlaces = places.filter((place) => {
+      let leng = place.price?.length
+      return (
+        leng === ((filter.price === 'all' ? '' : Number(filter.price))) || (filter.price === 'all' ? place.price?.includes('') : place.price?.includes(filter.price)) &&
+        place.category?.includes((filter.categories === 'all' ? 'all' : filter.categories)) &&
+        (place.isOpen?.includes(filter.isOpen ? 'Buka' : ''))
+      )
+    })
 
-  })
 
   return (
     <>
@@ -35,9 +42,30 @@ function App() {
         <hr />
 
         <ul className='grid md:grid-cols-2 lg:grid-cols-3 gap-4 justify-center mx-auto mt-10'>
-          {places.map((place, id) => {
+          {/* {places.map((place, id) => {
             const rating = place.ratingText ? place.ratingText.split(' ')[0] : 'No Rating';
-            {/* memberikan batasan postingan */}
+            if (id > 8) return null
+            return (
+              <li key={id}>
+                <CardRestaurant>
+                  <CardRestaurant.Header image={place.image} alt={place.storeName} />
+                  <div className='space-y-8 m-4'>
+                    <CardRestaurant.Body
+                      storeName={place.storeName}
+                      rating={rating}
+                      address={place.address}
+                      price={place.price}
+                      isOpen={place.isOpen}
+                    />
+                    <CardRestaurant.Footer placeId={place.placeId}/>
+                  </div>
+                </CardRestaurant>
+              </li>
+            )
+          })} */}
+
+          {filteredPlaces.map((place, id) => {
+            const rating = place.ratingText ? place.ratingText.split(' ')[0] : 'No Rating';
             if (id > 8) return null
             return (
               <li key={id}>

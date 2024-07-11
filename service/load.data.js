@@ -1,6 +1,8 @@
 import { data } from "autoprefixer"
+import { useSelector } from "react-redux"
 
 const fetchData = (callback) => {
+
     try {
         fetch("https://api-one-pied.vercel.app/api/v1/restaurants")
             .then((response) => response.json())
