@@ -19,7 +19,7 @@ const Header = ({image, alt}) => {
 const Body = ({
     storeName,
     rating,
-    address,
+    category,
     price,
     isOpen
 }) => {
@@ -31,7 +31,7 @@ const Body = ({
             </div>
             <div className='flex justify-between'>
                 <div className='flex w-1/2'>
-                    <p>{address ? address.length > 20 ?  address.substring(0,15) + "...": address : "Surabaya"}{" - "}{price ? price : '$$'}</p>
+                    <p>{category}{" - "}{price ? price : '$$'}</p>
                 </div>
                 <div className='flex justify-center items-center gap-2'>
                     <div className={`${isOpen === "Buka" ? 'bg-green-500' : 'bg-red-500'} w-2 h-2 rounded-full`}></div>

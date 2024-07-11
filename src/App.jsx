@@ -66,7 +66,7 @@ function App() {
 
           {filteredPlaces && filteredPlaces.map((place, id) => {
             const rating = place.ratingText ? place.ratingText.split(' ')[0] : 'No Rating';
-            if (id > 8) return null
+            // if (id > 8) return null
             return (
               <li key={id}>
                 <CardRestaurant>
@@ -75,7 +75,7 @@ function App() {
                     <CardRestaurant.Body
                       storeName={place.storeName}
                       rating={rating}
-                      address={place.address}
+                      category={place.category}
                       price={place.price}
                       isOpen={place.isOpen}
                     />

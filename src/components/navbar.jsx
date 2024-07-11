@@ -19,9 +19,9 @@ const Navbar = () => {
 
 
     return (
-        <nav className="flex gap-4 justify-between mt-5">
-            <form action="" className="flex gap-4 justify-between">
-                <section className="flex gap-4">
+        <nav className="flex gap-4 mt-5">
+            <form action="" className="flex w-full justify-between">
+                <section className="flex gap-4 justify-center items-center px-3 py-2">
                     <p>Filter By{" : "}</p>
                     <div>
                         <input type="checkbox" name="isOpen" id="isOpen" ref={open}
@@ -34,7 +34,7 @@ const Navbar = () => {
                         />
                         <label htmlFor="isOpen">Open Now</label>
                     </div>
-                    <select name="filterPrice" id="filterPrice" ref={price} onChange={() => dispatch(setFilter({
+                    <select name="filterPrice" id="filterPrice" className="bg-transparent border border-b-2 border-b-slate-600 border-t-0 border-l-0 border-r-0" ref={price} onChange={() => dispatch(setFilter({
                         price: price.current.value == 'all' ? '' : price.current.value,
                         categories: category.current.value == 'all' ? '' : category.current.value,
                         isOpen: open.current.checked ? 'Buka' : ''
@@ -45,7 +45,7 @@ const Navbar = () => {
                         <option value="3">$$$</option>
                         <option value="4">$$$$</option>
                     </select>
-                    <select name="filterCategories" id="filterCategories" ref={category} onChange={() => dispatch(setFilter({
+                    <select name="filterCategories" id="filterCategories" className="bg-transparent border border-b-2 border-b-slate-600 border-t-0 border-l-0 border-r-0" ref={category} onChange={() => dispatch(setFilter({
                         price: price.current.value == 'all' ? '' : price.current.value,
                         categories: category.current.value == 'all' ? '' : category.current.value,
                         isOpen: open.current.checked ? 'Buka' : ''
@@ -60,7 +60,7 @@ const Navbar = () => {
                 </section>
                 
                 <section>
-                    <button type="reset" id="clear-filter" onClick={() => dispatch(removeFilter())}>Clear All</button>
+                    <button type="reset" id="clear-filter" className="px-3 py-2 border border-slate-600 " onClick={() => dispatch(removeFilter())}>Clear All</button>
                 </section>
             </form>
         </nav>
