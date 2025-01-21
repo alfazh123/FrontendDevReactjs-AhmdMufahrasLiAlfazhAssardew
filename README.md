@@ -50,13 +50,13 @@ pnpm dev
 bun dev
 ```
 
-# Tech stack
+## Tech stack
 
 -   React (19.0.0)
 -   Next (15.1.5)
 -   Tailwindcss (3.4.1)
 -   Node js (20.14.0)
 
-# Deploy link
+## Deploy link
 
 [https://frontend-dev-reactjs-ahmd-mufahras-li-alfazh-assardew.vercel.app/](https://frontend-dev-reactjs-ahmd-mufahras-li-alfazh-assardew.vercel.app/ "link deploy")
