@@ -33,6 +33,10 @@ export default function Home() {
     categories: '',
     openNow: false
   })
+  const [filteredResto, setFilteredResto] = useState<RestaurantFinalProps[]>([]);
+  const [finalDataResto, setFinalData] = useState<RestaurantFinalProps[]>([])
+  const [isOpen, setIsOpen] = useState(false)
+  const [categorie, setCategories] = useState<string[]>([])
 
   const fetchdata = async () => {
     const res = await fetch('https://restaurant-api.dicoding.dev/list')
@@ -45,10 +49,6 @@ export default function Home() {
     const json = await res.json()
     return json.restaurant.categories;
   }
-
-  const [finalDataResto, setFinalData] = useState<RestaurantFinalProps[]>([])
-  const [isOpen, setIsOpen] = useState(false)
-  const [categorie, setCategories] = useState<string[]>([])
 
   useEffect(() => {
     // fetchdata().then((data) => setData(data))
@@ -97,7 +97,6 @@ export default function Home() {
     })
   }, [isOpen])
 
-  const [filteredResto, setFilteredResto] = useState<RestaurantFinalProps[]>([]);
 
   useEffect(() => {
     const newFilteredResto = finalDataResto.filter((resto) => {
@@ -111,32 +110,70 @@ export default function Home() {
     setFilteredResto(newFilteredResto);
   }, [filter, finalDataResto]);
 
+  const clearFilter = () => {
+    setFilter({
+      price: '',
+      categories: '',
+      openNow: false
+    });
+  }
+
   return (
-    <div className="lg:mx-auto justify-center items-center lg:w-2/3 mx-4 mt-10">
-      <div className="flex flex-wrap gap-2 underline">
-        <span className="flex justify-center items-center gap-2">
-          <input type="checkbox" name="categories" id="all" value={filter.openNow? 'open' : 'closed'} placeholder="Open Now" onChange={() => setFilter((prev) => ({...prev, openNow: !prev.openNow}))} />
-          <p>Open Now</p>
-        </span>
-        <select className="w-1/4 p-2 rounded-lg bg-gray-100" name="categories" id="categories" onChange={(e) => setFilter((prev) => ({...prev, categories: e.target.value}))}>
-          <option value="">All</option>
-          {categorie.map((category, id) => (
-            <option key={id} value={category}>{category}</option>
-          ))}
-        </select>
-        <select className="w-1/4 p-2 rounded-lg bg-gray-100" name="price" id="price" onChange={(e) => setFilter((prev) => ({...prev, price: e.target.value}))}>
-          <option value="">All</option>
-          <option value="$">$</option>
-          <option value="$$">$$</option>
-          <option value="$$$">$$$</option>
-        </select>
+    <div className="lg:mx-auto justify-center items-center lg:w-2/3 mx-4 mt-10 mb-20">
+      <h1 className="text-4xl">Restaurants</h1>
+      <p className="text-slate-500">Laborum do dolore duis mollit irure. Labore dolore incididunt veniam voluptate in duis. Officia commodo aute aute sit. Sit magna magna est sint enim culpa pariatur excepteur velit sint pariatur. Culpa aliqua exercitation enim pariatur fugiat minim ea aute. Ut consequat esse cupidatat proident nulla.</p>
+
+      {/* Navbar */}
+      <div className="flex mt-10 py-4 border border-slate-900 border-t-3 border-b-3 border-l-0 border-r-0 ">
+
+        <div className="flex flex-wrap items-center gap-2 w-full">
+          <p>Filter By:</p>
+          <span className="flex justify-center items-center gap-2 border border-slate-900 border-b-2 border-t-0 border-l-0 border-r-0">
+            <input 
+              type="checkbox" 
+              checked={filter.openNow}
+              name="categories" 
+              id="all" 
+              value={filter.openNow? 'open' : 'closed'} 
+              onChange={() => setFilter((prev) => ({...prev, openNow: !prev.openNow}))} />
+            <p>Open Now</p>
+          </span>
+
+          <select 
+            className="w-1/4 p-2 rounded-lg bg-gray-100 bg-opacity-0 border border-slate-900 border-b-2 border-t-0 border-l-0 border-r-0" 
+            name="categories" 
+            id="categories" 
+            onChange={(e) => setFilter((prev) => ({...prev, categories: e.target.value}))} 
+            value={filter.categories}>
+            <option value="">All</option>
+            {categorie.map((category, id) => (
+              <option key={id} value={category}>{category}</option>
+            ))}
+          </select>
+
+          <select 
+            className="w-1/4 p-2 rounded-lg bg-gray-100 bg-opacity-0 border border-slate-900 border-b-2 border-t-0 border-l-0 border-r-0" 
+            name="price" 
+            id="price" 
+            onChange={(e) => setFilter((prev) => ({...prev, price: e.target.value}))} 
+            value={filter.price}>
+            <option value="">All</option>
+            <option value="$">$</option>
+            <option value="$$">$$</option>
+            <option value="$$$">$$$</option>
+          </select>
+        </div>
+
+        <div className="">
+          <button className="w-20 bg-slate-900 text-white p-2 rounded-lg" onClick={() => clearFilter()}>Clear All</button>
+        </div>
       </div>
-      {/* { filteredResto.map} */}
+      
       {
         filter.openNow || filter.categories || filter.price ? (
-          <ListRestorant data={filteredResto} />
+          filteredResto && <ListRestorant data={filteredResto} />
         ) : (
-          <ListRestorant data={finalDataResto} />
+          finalDataResto && <ListRestorant data={finalDataResto} />
         )
       }
     </div>

@@ -8,10 +8,11 @@ interface CardRestorantProps {
     restorantImageId: string;
     restorantRating: number;
     restorantPriceRange: string;
-    isClosed: boolean;
+    isOpen: boolean;
 }
 
-export default function CardRestorant({ restorantId, restorantImageId, restorantName, restorantRating, restorantPriceRange, isClosed: isOpen }: CardRestorantProps) {
+
+export default function CardRestorant({ restorantId, restorantImageId, restorantName, restorantRating, restorantPriceRange, isOpen }: CardRestorantProps) {
 
     const [categories, setCategories] = useState([])
     useEffect(() => {
@@ -22,13 +23,25 @@ export default function CardRestorant({ restorantId, restorantImageId, restorant
             })
     }, [restorantId])
 
+    const stars = []
+    for (let i = 0; i < 5; i++) {
+        if (i < Math.floor(restorantRating)) {
+            stars.push(<span key={i} className="text-blue-950 text-xl">★</span>)
+        } else if (i < restorantRating) {
+            stars.push(<span key={i} className="text-blue-950 text-xl">☆</span>)
+        } else {
+            stars.push(<span key={i} className="text-blue-200 text-xl">★</span>)
+        }
+    }
+
     return (
         <div className="w-full">
             <Image src={`https://restaurant-api.dicoding.dev/images/medium/${restorantImageId}`} alt={restorantName} width={800} height={300} className="h-48 object-cover" />
             <div>
                 <h1 className="text-lg font-semibold">{restorantName}</h1>
                 <p className="text-sm">restorantPriceRange</p>
-                <p>{restorantRating}</p>
+                {/* <p>{restorantRating}</p> */}
+                <div>{stars.map((star) => star)}</div>
                 <p>{restorantPriceRange}</p>
                 <div className="flex justify-between">
                     <p>{categories.map((cat: {name: string}) => cat.name).join(', ')}</p>

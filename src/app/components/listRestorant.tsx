@@ -3,7 +3,7 @@ import CardRestorant from './cardRestorant';
 
 export default function ListRestorant( { data }: { data?: RestaurantFinalProps[] } ) {
     return (
-        <div className='sm:grid md:grid-cols-2 xl:grid-cols-3 gap-8 flex flex-col mt-10'>
+        <div className='sm:grid md:grid-cols-2 xl:grid-cols-3 xl:gap-12 md:gap-10 gap-8 flex flex-col mt-10'>
             {data?.map((restaurant, id) => (
                 <div key={id}>
                     <CardRestorant
@@ -12,7 +12,7 @@ export default function ListRestorant( { data }: { data?: RestaurantFinalProps[]
                         restorantName={restaurant.name}
                         restorantRating={restaurant.rating}
                         restorantPriceRange={restaurant.price}
-                        isClosed={restaurant.isOpen}
+                        isOpen={restaurant.isOpen}
                     />
                 </div>
             ))}
