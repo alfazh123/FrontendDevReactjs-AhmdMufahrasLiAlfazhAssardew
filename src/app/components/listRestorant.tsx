@@ -1,9 +1,9 @@
-import { RestaurantProps } from '@/app/page';
+import { RestaurantFinalProps } from '@/app/page';
 import CardRestorant from './cardRestorant';
 
-export default function ListRestorant( { data }: { data?: RestaurantProps[] } ) {
+export default function ListRestorant( { data }: { data?: RestaurantFinalProps[] } ) {
     return (
-        <div className='sm:grid md:grid-cols-2 xl:grid-cols-3 gap-8 flex flex-col lg:mx-auto justify-center items-center lg:w-2/3 mx-4 mt-10'>
+        <div className='sm:grid md:grid-cols-2 xl:grid-cols-3 gap-8 flex flex-col mt-10'>
             {data?.map((restaurant, id) => (
                 <div key={id}>
                     <CardRestorant
@@ -11,6 +11,8 @@ export default function ListRestorant( { data }: { data?: RestaurantProps[] } ) 
                         restorantImageId={restaurant.pictureId}
                         restorantName={restaurant.name}
                         restorantRating={restaurant.rating}
+                        restorantPriceRange={restaurant.price}
+                        isClosed={restaurant.isOpen}
                     />
                 </div>
             ))}

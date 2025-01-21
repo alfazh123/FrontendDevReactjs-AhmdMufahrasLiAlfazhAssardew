@@ -1,9 +1,7 @@
 'use client'
 
 import { use, useEffect, useState } from "react";
-import { RestaurantProps } from "../page";
 import Image from "next/image";
-import { join } from "path";
 
 interface RestaurantDetailProps {
     id: string;
@@ -30,21 +28,21 @@ export default function DetailRestaurant({ params } : { params: Promise<{ id: st
         return json.restaurant;
     }
 
-    const buttonItem = [
-        {
-            name: 'Foods',
-            query: ''
-        },
-        {
-            name: 'Drinks',
-            query: 'drinks'
-        }
-    ]
+    // const buttonItem = [
+    //     {
+    //         name: 'Foods',
+    //         query: ''
+    //     },
+    //     {
+    //         name: 'Drinks',
+    //         query: 'drinks'
+    //     }
+    // ]
 
     useEffect(() => {
         fetchdata().then((data) => setData(data))
-    }, [])
-    console.log("data",data)
+    }, [fetchdata])
+    // console.log("data",data)
     
     return (
         <div className="flex flex-col gap-12 mt-10 max-w-[1200px] justify-center mx-auto">
@@ -69,7 +67,7 @@ export default function DetailRestaurant({ params } : { params: Promise<{ id: st
                     <div>
                         <h1 className="text-lg font-semibold">Categories restaurant</h1>
                         <div>
-                            {data?.categories.map((cat, id) => cat.name).join(', ')}
+                            {data?.categories.map((cat) => cat.name).join(', ')}
                         </div>
                         <div className="mt-10">
                             <h1 className="text-xl font-bold">Menu</h1>
