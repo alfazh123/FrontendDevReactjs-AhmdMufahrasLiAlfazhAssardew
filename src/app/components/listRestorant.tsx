@@ -13,6 +13,7 @@ export default function ListRestorant( { data }: { data?: RestaurantFinalProps[]
                         restorantRating={restaurant.rating}
                         restorantPriceRange={restaurant.price}
                         isOpen={restaurant.isOpen}
+                        categories={restaurant.categories}
                     />
                 </div>
             ))}

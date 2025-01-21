@@ -1,6 +1,5 @@
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
 
 interface CardRestorantProps {
     restorantId: string;
@@ -8,20 +7,13 @@ interface CardRestorantProps {
     restorantImageId: string;
     restorantRating: number;
     restorantPriceRange: string;
+    categories: { name: string }[];
     isOpen: boolean;
 }
 
 
-export default function CardRestorant({ restorantId, restorantImageId, restorantName, restorantRating, restorantPriceRange, isOpen }: CardRestorantProps) {
+export default function CardRestorant({ restorantId, restorantImageId, restorantName, restorantRating, restorantPriceRange, isOpen, categories }: CardRestorantProps) {
 
-    const [categories, setCategories] = useState([])
-    useEffect(() => {
-        fetch(`https://restaurant-api.dicoding.dev/detail/${restorantId}`)
-            .then(response => response.json())
-            .then(data => {
-                setCategories(data.restaurant.categories)
-            })
-    }, [restorantId])
 
     const stars = []
     for (let i = 0; i < 5; i++) {
@@ -39,12 +31,11 @@ export default function CardRestorant({ restorantId, restorantImageId, restorant
             <Image src={`https://restaurant-api.dicoding.dev/images/medium/${restorantImageId}`} alt={restorantName} width={800} height={300} className="h-48 object-cover" />
             <div>
                 <h1 className="text-lg font-semibold">{restorantName}</h1>
-                <p className="text-sm">restorantPriceRange</p>
                 {/* <p>{restorantRating}</p> */}
                 <div>{stars.map((star) => star)}</div>
                 <p>{restorantPriceRange}</p>
                 <div className="flex justify-between">
-                    <p>{categories.map((cat: {name: string}) => cat.name).join(', ')}</p>
+                    <p>{categories.map((cat : { name: string}) => cat.name).join(', ')}</p>
                     <div className="flex items-center justify-center gap-2">
                         <span className={`w-2 h-2 ${isOpen ? 'bg-green-400' : 'bg-red-600'} rounded-full`}></span>
                         <p>{isOpen ? 'Open' : 'Closed'}</p>

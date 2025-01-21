@@ -1,9 +1,8 @@
 'use client'
 
-import { use, useEffect, useState } from "react";
+import { use, useCallback, useEffect, useState } from "react";
 import Image from "next/image";
 import Comment from "../components/detail/comment";
-import MenuList from "../components/detail/menu";
 import Link from "next/link";
 
 interface RestaurantDetailProps {
@@ -25,16 +24,16 @@ export default function DetailRestaurant({ params } : { params: Promise<{ id: st
     const [buttonActive, setButtonActive] = useState('')
     const param = use(params)
 
-    const fetchdata = async () => {
+    const fetchdata = useCallback(async () => {
         const res = await fetch(`https://restaurant-api.dicoding.dev/detail/${param.id}`)
         const json = await res.json()
         return json.restaurant;
-    }
+    }, [param.id])
 
     useEffect(() => {
         fetchdata().then((data) => setData(data))
     }, [fetchdata])
-    // console.log("data",data)
+    console.log("data",data)
     
     return (
         <div className="flex flex-col gap-12 mt-10 max-w-[1200px] justify-center mx-auto">
